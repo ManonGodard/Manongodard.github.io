@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Phoographie Mariage</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+<body>
+    
+    <div class="carousel">
+        <button class="carousel-btn prev-btn">&lt;</button>
+        <div class="carousel-track">
+            <img src="photomariage/1 - Moyenne.jpeg" alt="Image 1">
+            <img src="photomariage/2 - Moyenne.jpeg" alt="Image 2">
+            <img src="photomariage/3 - Moyenne.jpeg" alt="Image 3">
+            <img src="photomariage/4 - Moyenne.jpeg" alt="Image 4">
+            <img src="photomariage/5 - Moyenne.jpeg" alt="Image 5">
+            <img src="photomariage/6 - Moyenne.jpeg" alt="Image 6">
+            <img src="photomariage/7 - Moyenne.jpeg" alt="Image 7">
+            <img src="photomariage/8 - Moyenne.jpeg" alt="Image 8">
+            <img src="photomariage/9 - Moyenne.jpeg" alt="Image 9">
+        </div>
+        <button class="carousel-btn next-btn">&gt;</button>
+    </div>
+    <script>// script.js
+        const track = document.querySelector('.carousel-track');
+        const prevButton = document.querySelector('.prev-btn');
+        const nextButton = document.querySelector('.next-btn');
+        const images = Array.from(track.children);
+        
+        let currentIndex = 0;
+        
+        // Largeur d'une image (identique à la largeur de l'écran)
+        const slideWidth = window.innerWidth;
+        
+        // Met à jour la position du carrousel
+        function updateCarouselPosition() {
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        }
+        
+        // Événement pour le bouton "Précédent"
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarouselPosition();
+            }
+        });
+        
+        // Événement pour le bouton "Suivant"
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                updateCarouselPosition();
+            }
+        });
+        
+        </script>
+</body>
+</html>
