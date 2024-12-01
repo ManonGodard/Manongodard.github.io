@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specimen</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1> Specimen Typographique.</h1>
+                <p>
+                    la Typographie "Lyno" est une police de caractère qui a été créée par les designers Radim Pesko et karl Navrot. Elle est inspiée d'icones de notre societé, d'artistes et de légende grecques. elle se divise en 4 nuances.
+                </p>
+                <p>
+                    sous la forme d'un site web codé en css et html j'ai presenté les differentes polices d'ecriture de cette Typographie ainsi que l'histoire de ceux qui l'ont inspiré. On retrouve en debut de page, des exemples concret de l'utilisation de cette typographie. 
+                </p>
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="imgs/lyno - Grande.jpeg" alt="Image 1">
+                    <img src="imgs/lyno2 - Grande.jpeg" alt="Image 2">
+                    <img src="imgs/Lyno3 - Grande.jpeg" alt="Image 3">
+                    <img src="imgs/Lyno4 - Grande.jpeg" alt="Image 4">
+                    <img src="imgs/Lynoo - Grande.jpeg" alt="Image 3">
+                    
+                </div>
+                <!-- Boutons de navigation -->
+                <button class="prev">&lt;</button>
+                <button class="next">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+        // Défilement automatique
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }, 4000);
+         </script>
+</body>
+
+</html>
