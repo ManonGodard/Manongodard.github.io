@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel avec Texte</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1>Velocité</h1>
+                <p>J'ai réalisé une installation murale en vinyle mettant en scène 
+                    des otaries, dessinées avec des traits francs et rapides pour capturer leur vitesse et leurs qualités dans l'eau.
+                     Ces dessins d'observation, réalisés lors de ma visite au zoo d'Amiens, cherchent à refléter la fluidité et l'agilité 
+                     de ces animaux marins. L'idée de mouvement est essentielle dans cette réalsation: pour observer pleinement les otaries, 
+                     il était nécessaire de toujours etre mobile, créant une interaction dynamique avec l'installation. Cela permet de ressentir 
+                     le mouvement et l'énergie des otaries, tout en établissant une connexion entre l'installation et le spectateur.
+                    
+                </p>
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="img /C2 .jpeg" alt="Image 1">
+                   
+                </div>
+                <!-- Boutons de navigation -->
+                
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+        
+         </script>
+</body>
+
+</html>

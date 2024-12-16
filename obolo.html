@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascale OBOLO</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1>Design Affiche</h1>
+               <p>
+
+                Réalisation d'une affiche pour la conference 
+                de Pascale Obolo en 2022 à l'EESAB de Rennes. Cette affiche à pour volonté de montrer le flot de connaissance et l'energie que la conferencière porte en elle, pret à se deverser, à exploser vers nous.
+                </p>
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="img /K1.jpeg" alt="Image 1">
+                    
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+        // Défilement automatique
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }, 4000);
+         </script>
+</body>
+
+</html>

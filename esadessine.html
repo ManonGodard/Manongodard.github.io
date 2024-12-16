@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel avec Texte</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1>ESAD'ESSINE</h1>
+               <p>
+
+                La première edition du concours de dessin de l'ESAD d'Amiens à pour ambition de montrer que le dessin et le graphisme sont liés et un fort atout. le 25 fevrier 2025 se tiendra la premiere exposition pour rendre compte des créations. 
+                <br>
+                Nous sommes actuellement en pleine organisation de cet evenement que nous voulons festif et creatif. </p>
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="img /J1 .jpeg" alt="Image 1">
+                    
+                    
+                </div>
+                <!-- Boutons de navigation -->
+                <button class="prev">&lt;</button>
+                <button class="next">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+        // Défilement automatique
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }, 4000);
+         </script>
+</body>
+
+</html>

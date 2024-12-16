@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel avec Texte</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1>PERE HAUTI</h1>
+                <p>
+                    Pere hauti, en Tahitien, signifie " Jeu de carte". 
+                </p>
+                <p>
+                    Suite à une expérience sur l'île de Tahiti, j'ai eu l'occasion de travailler sur de l'aluminium anodisé. <br>
+J'y ai rencontré des personnes qui m'ont inspiré ce projet. Chaque dessin est un clin d'œil à la culture polynésienne et à sa spiritualité. <br>
+Le choix du jeu de cartes s'est imposé comme un objet intemporel et synonyme de partage. J'ai réalisé chaque dessin à la main avant de les vectoriser, puis de les graver au laser. <br>
+Ce projet a été à la fois une expérience technique et créative : un challenge que j'ai adoré relever. <br>
+                    
+
+                </p>
+                <p> Ce projet est une collaboration avec Alain Blain, Le Directeur d'H2VH à Taravao.</p>
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                   
+                    <img src="img /B2.jpeg"Image 2>
+                    
+               
+                </div>
+                <!-- Boutons de navigation -->
+               
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+      
+         </script>
+</body>
+
+</html>

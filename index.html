@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Manon Godard</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            
+        </div>
+        <h1>Manon Godard</h1>
+        <nav class="nav">
+            <ul>
+                
+                <li><a href="https://www.instagram.com/manon.godard_photographie/">Instagram</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a class="card" href="mana.html">
+            <h3 class="title">Mana</h3>
+            <div class="image">
+                <img src="img /I1 .jpeg" alt="Adieu au langage">
+            </div>
+        </a>
+        <a class="card" href="disp.html">
+            <h3 class="title">LA DISPARITION</h3>
+            <div class="image">
+                <img src="img /D1.jpeg" alt="La disparition">
+            </div>
+        </a>
+        <a class="card" href="matilda.html">
+            <h3 class="title">MATILDA</h3>
+            <div class="image">
+                <img src="img /E1.JPG" alt="Matilda">
+            </div>
+        </a>
+       
+        <a class="card" href="perehauti.html">
+            <h3 class="title">PERE HAUTI</h3>
+            <div class="image">
+                <img src="img /B1.jpeg" alt="Père Hauti">
+            </div>
+        </a>
+       
+        <a class="card" href="otaries.html">
+            <h3 class="title">VÉLOCITÉ</h3>
+            <div class="image">
+                <img src="img /C1.jpeg" alt="Vélocité">
+            </div>
+        </a>
+        
+        <a class="card" href="symphonie.html">
+            <h3 class="title">SYMPHONIE</h3>
+            <div class="image">
+                <img src="img /L1.jpeg" alt="Symphonie">
+            </div>
+        </a>
+        <a class="card" href="esadessine.html">
+            <h3 class="title">ESAD'ESSINE</h3>
+            <div class="image">
+                <img src="img /J1 .jpeg" alt="esad">
+            </div>
+        <a class="card" href="culoté.html">
+            <h3 class="title">CULOTHÉ</h3>
+            <div class="image">
+                <img src="img /G1.png" alt="Specimen">
+            </div>
+        </a>
+        
+        <a class="card" href="instant.html">
+            <h3 class="title">INSTANT T</h3>
+            <div class="image">
+                <img src="img /F1.jpeg" alt="Coven">
+            </div>
+        </a>
+        <a class="card" href="obolo.html">
+            <h3 class="title">Pascale Obolo</h3>
+            <div class="image">
+                <img src="img /K1.jpeg" alt="Pascale Obolo">
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        <p>
+            Étudiante en deuxième année de design graphique à l'ESAD d'Amiens, je suis passionnée par la création visuelle et la richesse des signes. <br>
+            J’aime explorer les interactions entre photographie, typographie et composition. <br>
+            <h2>Bienvenue dans mon univers.</h2>
+        </p>
+    </footer>
+
+    <script >
+    const container = document.querySelector('.container');
+const cards = document.querySelectorAll('.card');
+let scrollPosition = 0;
+
+// Cloner les cartes pour créer une boucle infinie
+cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    container.appendChild(clone);
+});
+
+// Fonction pour le défilement automatique
+function autoScroll() {
+    scrollPosition += 5; // Accéléré, ajustez la vitesse comme nécessaire
+    if (scrollPosition >= container.scrollWidth / 2) {
+        scrollPosition = 0;
+    }
+    container.style.transform = `translateX(-${scrollPosition}px)`;
+}
+
+// Scroll automatique
+let scrollInterval = setInterval(autoScroll, 20); // Diminution du délai pour un défilement plus rapide
+
+// Pause au survol
+container.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+container.addEventListener('mouseleave', () => {
+    scrollInterval = setInterval(autoScroll, 18);
+});
+
+        
+    </script>
+</body>
+
+</html>

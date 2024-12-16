@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel avec Texte</title>
+    <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zone de texte -->
+        <div class="text-section">
+            <div class="text-content">
+                <h1> Culothé</h1>
+                <p>
+
+                    Culothé, c’est le thé qui promet de pimenter vos soirées, grâce à un mélange sensuel d’ingrédients 
+                    aphrodisiaques et de saveurs audacieuses. Avec son slogan évocateur – "Le thé servi à table pour finir au lit" 
+                    – il invite à la complicité. Actuellement en cours de développement, Culothé est un projet en pleine ébullition.
+                     Nous travaillons encore sur son design graphique pour capturer toute l’énergie de cette idée audacieuse,
+                     mêlant plaisir et provocation. Une identité à venir, pensée pour vous séduire dès le premier regard.</p>
+                
+            </div>
+        </div>
+
+        <!-- Zone du carousel -->
+        <div class="carousel-section">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="img /G1.png" alt="Image 1">
+                    
+                </div>
+                <!-- Boutons de navigation -->
+                
+            </div>
+        </div>
+    </div>
+
+    <script>const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
+        let currentIndex = 0;
+        
+        // Fonction pour mettre à jour la position du carousel
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+        
+        // Navigation manuelle
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+        
+       
+         </script>
+</body>
+
+</html>
