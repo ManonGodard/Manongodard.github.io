@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      overscroll-behavior: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'helvetica neue', helvetica, arial, sans-serif;
+      background-color: #ffffff;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+    }
+
+    .container {
+      width: 100%; /* Largeur du conteneur */
+      height: 100vh; /* Hauteur du conteneur */
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Crée une grille fluide */
+      gap: 20px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .projets {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      gap: 30px;
+      position: absolute;
+      top: 0;
+      padding: 20px;
+    }
+
+    .projet {
+      width: 250px;
+      height: 350px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      position: relative;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card .front, .card .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .card .front {
+      background: #f1ffff48; /* Beige clair */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .card .back {
+      background: #ffffffd3;
+      transform: rotateY(180deg);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card .front h1 {
+      font-size: 1.2rem;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .card .front div {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .card .front p {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .card .back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Modale */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      color: #000;
+      padding: 20px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 90vh; /* Limite la hauteur de la modale */
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      overflow-y: auto; /* Permet le défilement vertical */
+    }
+
+    .modal-content h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header"></header>
+  <div class="container">
+    <div class="projets"></div>
+  </div>
+
+  <!-- Modale -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h1 id="modal-title"></h1> <!-- Titre du projet -->
+      <p id="modal-description"></p> <!-- Description du projet -->
+      <img id="modal-img" src="" alt="Image du projet"> <!-- Image du projet -->
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap/dist/MotionPathPlugin.min.js"></script>
+  <script type="module">
+    const sheets = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIX88gIXbndOvcX_t-ebsDvmzksXA69r2IdQK_S1gsAhKe2fouJ-Il9fEwJqqsT2ApkNrc07frkZ7M/pub?gid=0&single=true&output=csv";
+    const response = await fetch(sheets);
+    const csvText = await response.text();
+
+    const sanitizeName = (name) => {
+      const accentsMap = new Map([
+        ['á', 'a'], ['à', 'a'], ['â', 'a'], ['ä', 'a'], ['ã', 'a'], ['å', 'a'],
+        ['é', 'e'], ['è', 'e'], ['ê', 'e'], ['ë', 'e'], ['í', 'i'], ['ì', 'i'],
+        ['î', 'i'], ['ï', 'i'], ['ó', 'o'], ['ò', 'o'], ['ô', 'o'], ['ö', 'o'],
+        ['õ', 'o'], ['ø', 'o'], ['ú', 'u'], ['ù', 'u'], ['û', 'u'], ['ü', 'u'],
+        ['ý', 'y'], ['ÿ', 'y'], ['ñ', 'n'], ['ç', 'c']
+      ]);
+      let sanitized = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      sanitized = Array.from(sanitized).map(char => accentsMap.get(char) || char).join('');
+      return sanitized.replace(/[^A-Za-z0-9_\-]/g, '_');
+    };
+
+    const csvToJson = (csvString) => {
+      try {
+        const lines = [];
+        let currentLine = '';
+        let insideQuotes = false;
+
+        for (let i = 0; i < csvString.length; i++) {
+          const char = csvString[i];
+          if (char === '"') {
+            insideQuotes = !insideQuotes;
+            currentLine += char;
+          } else if (char === '\n' && !insideQuotes) {
+            lines.push(currentLine);
+            currentLine = '';
+          } else {
+            currentLine += char;
+          }
+        }
+
+        if (currentLine) lines.push(currentLine);
+
+        const headers = lines[0].split(',').map(h => h.trim());
+        const result = [];
+
+        for (let i = 1; i < lines.length; i++) {
+          if (lines[i].trim() === '') continue;
+
+          const values = [];
+          let currentValue = '';
+          let inQuotes = false;
+
+          for (let j = 0; j < lines[i].length; j++) {
+            const char = lines[i][j];
+            if (char === '"') {
+              inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+              values.push(currentValue);
+              currentValue = '';
+            } else {
+              currentValue += char;
+            }
+          }
+
+          values.push(currentValue);
+
+          const obj = {};
+          headers.forEach((header, index) => {
+            let value = values[index] || '';
+            if (value.startsWith('"') && value.endsWith('"')) {
+              value = value.substring(1, value.length - 1);
+            }
+            value = value.replace(/\r/g, '');
+            if (value.includes('\n')) {
+              value = value.split('\n').map(line => `<p>${line.trim()}</p>`).join('');
+            }
+            obj[header] = value;
+          });
+
+          result.push(obj);
+        }
+
+        return result;
+      } catch (error) {
+        console.error("Erreur CSV JSON:", error);
+        return [];
+      }
+    };
+
+    const _json = csvToJson(csvText);
+    const json = _json;  // Aucune limite, tous les projets sont inclus
+
+    const $projets = document.querySelector(".projets");
+    const modal = document.getElementById("modal");
+    const closeModal = document.querySelector(".close-modal");
+
+    json.forEach((item) => {
+      const div = document.createElement("div");
+      div.classList.add("projet");
+      $projets.appendChild(div);
+
+      const card = document.createElement("div");
+      card.classList.add("card");
+      div.appendChild(card);
+
+      const front = document.createElement("div");
+      front.classList.add("front");
+      card.appendChild(front);
+
+      const img = document.createElement("img");
+      img.src = `img/${sanitizeName(item.titre)}.png`;
+      front.appendChild(img);
+
+      const titre = document.createElement("h1");
+      titre.textContent = item.titre;
+      front.appendChild(titre);
+
+      const categories = document.createElement("div");
+      categories.textContent = item.catégories;
+      front.appendChild(categories);
+
+      const description = document.createElement("p");
+      description.textContent = item.description;
+      front.appendChild(description);
+
+      const back = document.createElement("div");
+      back.classList.add("back");
+      card.appendChild(back);
+
+      const backImg = document.createElement("img");
+      backImg.src = `img/${sanitizeName(item.titre)}.png`;
+      back.appendChild(backImg);
+
+      // flip au survol
+      div.addEventListener("mouseover", () => {
+        card.classList.add("flipped");
+      });
+
+      div.addEventListener("mouseout", () => {
+        card.classList.remove("flipped");
+      });
+
+      // Ouvrir la modale au clic
+      div.addEventListener("click", () => {
+        const titre = item.titre;
+        const description = item.modale;
+        const imageSrc = `img/${sanitizeName(item.titre)}.png`;
+
+        document.getElementById("modal-title").textContent = titre;
+        document.getElementById("modal-description").textContent = description;
+        document.getElementById("modal-img").src = imageSrc;
+
+        modal.style.display = "flex";
+      });
+    });
+
+    // Fermer la modale
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Fermer la modale si l'utilisateur clique en dehors
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Animation d'entrée
+    gsap.set(".projet", {
+      opacity: 0,
+      x: "random(-500, 500)",
+      y: "random(-500, 500)",
+      scale: 0.5,
+      rotation: 0
+    });
+
+    const projets = gsap.utils.toArray(".projet");
+    projets.forEach((el, i) => {
+      const tl = gsap.timeline({
+        delay: i * 0.4,
+      });
+
+      tl.to(el, {
+        opacity: 1,
+        x: gsap.utils.random(-100, 100),
+        y: gsap.utils.random(-100, 100),
+        scale: 1,
+        rotation: gsap.utils.random(-15, 15),
+        duration: 1.5,
+      });
+    });
+  </script>
+</body>
+</html>
